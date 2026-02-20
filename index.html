@@ -1,143 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Winnie Service - Premium Packages</title>
-    <style>
-        /* General body and font */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-            color: #fff;
-            margin: 0;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Winnie Service - Premium Packages</title>
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 20px;
+        color: #fff;
+        margin: 0;
+    }
+    .container { max-width: 1200px; margin: 0 auto; }
+    h1 { text-align: center; font-size: 3em; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+    .subtitle { text-align: center; font-size: 1.2em; margin-bottom: 40px; }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+    .packages-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+    }
 
-        h1 {
-            text-align: center;
-            font-size: 3em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
+    .package-card {
+        background: rgba(255,255,255,0.95);
+        color: #333;
+        padding: 20px;
+        border-radius: 15px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    .package-card:hover { transform: translateY(-10px); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
 
-        .subtitle {
-            text-align: center;
-            font-size: 1.2em;
-            margin-bottom: 40px;
-        }
+    .package-icon { font-size: 2.5em; margin-bottom: 15px; }
+    .package-name { font-size: 1.3em; font-weight: bold; margin-bottom: 10px; }
+    .package-price { font-size: 1.5em; font-weight: bold; margin-bottom: 15px; color: #667eea; }
+    .btn { background: #25D366; border: none; padding: 10px 25px; border-radius: 50px; color: white; font-weight: bold; cursor: pointer; font-size: 1em; }
+    .btn:hover { background: #20b858; }
 
-        /* Package cards */
-        .packages-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-        }
+    .payment-page {
+        max-width: 500px;
+        margin: 0 auto;
+        background: rgba(26,38,57,0.95);
+        padding: 25px;
+        border-radius: 15px;
+        text-align: left;
+        display: none;
+        color: #fff;
+    }
+    .payment-page h2 { margin-bottom: 10px; text-align: center; }
+    .payment-page p.subtitle { font-size: 14px; margin-bottom: 15px; color: #a0aec0; text-align: center; }
+    .step { margin-bottom: 15px; }
+    .step h4 { margin: 5px 0; font-size: 15px; color: #fff; }
+    .step p { margin: 0; font-size: 13px; color: #a0aec0; line-height: 1.4; }
 
-        .package-card {
-            background: rgba(255,255,255,0.95);
-            color: #333;
-            padding: 20px;
-            border-radius: 15px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .package-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        .package-icon {
-            font-size: 2.5em;
-            margin-bottom: 15px;
-        }
-
-        .package-name {
-            font-size: 1.3em;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .package-price {
-            font-size: 1.5em;
-            font-weight: bold;
-            margin-bottom: 15px;
-            color: #667eea;
-        }
-
-        .btn {
-            background: #25D366;
-            border: none;
-            padding: 10px 25px;
-            border-radius: 50px;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 1em;
-        }
-
-        .btn:hover { background: #20b858; }
-
-        /* Payment page styles */
-        .payment-page {
-            max-width: 400px;
-            margin: 0 auto;
-            background: rgba(26,38,57,0.95);
-            padding: 25px;
-            border-radius: 15px;
-            text-align: center;
-            display: none;
-        }
-
-        .payment-page h2 { margin-bottom: 5px; }
-        .payment-page p.subtitle { font-size: 14px; margin-bottom: 15px; color: #a0aec0; }
-        .payment-page input[type="text"] {
-            width: 100%;
-            padding: 12px;
-            margin-top: 15px;
-            border-radius: 8px;
-            border: 1px solid #2d3748;
-            background: #0d1626;
-            color: #fff;
-            box-sizing: border-box;
-        }
-        .payment-page .btn { margin-top: 15px; width: 100%; }
-    </style>
+    input[type="text"] {
+        width: 100%;
+        padding: 12px;
+        margin-top: 15px;
+        border-radius: 8px;
+        border: 1px solid #2d3748;
+        background: #0d1626;
+        color: #fff;
+        box-sizing: border-box;
+    }
+</style>
 </head>
 <body>
-
 <div class="container">
     <h1>✨ Winnie Service ✨</h1>
     <p class="subtitle">Choose Your Perfect Package</p>
 
-    <!-- Packages Grid -->
     <div class="packages-grid" id="packagesGrid">
-        <div class="package-card" onclick="selectPackage('Video Call', 200)">
+        <div class="package-card" onclick="selectPackage('Video Call 🥵', 200)">
             <div class="package-icon">🥵🍑🍆💦</div>
             <div class="package-name">Video Call</div>
             <div class="package-price">Ksh 200</div>
             <button class="btn">Order Now</button>
         </div>
 
-        <div class="package-card" onclick="selectPackage('Sex Chat', 100)">
+        <div class="package-card" onclick="selectPackage('Sex Chat 👅', 100)">
             <div class="package-icon">💦</div>
             <div class="package-name">Sex Chat</div>
             <div class="package-price">Ksh 100</div>
             <button class="btn">Order Now</button>
         </div>
 
-        <div class="package-card" onclick="selectPackage('Ffm Video Call', 249)">
+        <div class="package-card" onclick="selectPackage('Ffm Video Call 🤤', 249)">
             <div class="package-icon">🥵</div>
             <div class="package-name">Ffm VC</div>
             <div class="package-price">Ksh 249</div>
+            <button class="btn">Order Now</button>
+        </div>
+
+        <div class="package-card" onclick="selectPackage('Videos Nikifinger 🫴', 180)">
+            <div class="package-icon">🍆💦🍑</div>
+            <div class="package-name">Videos Nikifinger</div>
+            <div class="package-price">Ksh 180</div>
+            <button class="btn">Order Now</button>
+        </div>
+
+        <div class="package-card" onclick="selectPackage('Videos Nikisesha 💦', 169)">
+            <div class="package-icon">💦🍑</div>
+            <div class="package-name">Videos Nikisesha</div>
+            <div class="package-price">Ksh 169</div>
+            <button class="btn">Order Now</button>
+        </div>
+
+        <div class="package-card" onclick="selectPackage('Videos Nikidiwa 😙', 149)">
+            <div class="package-icon">🍆</div>
+            <div class="package-name">Videos Nikidiwa</div>
+            <div class="package-price">Ksh 149</div>
+            <button class="btn">Order Now</button>
+        </div>
+
+        <div class="package-card" onclick="selectPackage('Nudes 🥰', 100)">
+            <div class="package-icon">🥵</div>
+            <div class="package-name">Nudes</div>
+            <div class="package-price">Ksh 100</div>
             <button class="btn">Order Now</button>
         </div>
 
@@ -147,14 +129,55 @@
             <div class="package-price">Ksh 450</div>
             <button class="btn">Order Now</button>
         </div>
+
+        <div class="package-card" onclick="selectPackage('Lesbian Connection', 399)">
+            <div class="package-icon">🍑</div>
+            <div class="package-name">Lesbian Connection</div>
+            <div class="package-price">Ksh 399</div>
+            <button class="btn">Order Now</button>
+        </div>
+
+        <div class="package-card" onclick="selectPackage('Kids Zone Videos', 200)">
+            <div class="package-icon">🍑🍆</div>
+            <div class="package-name">Kids Zone Videos</div>
+            <div class="package-price">Ksh 200</div>
+            <button class="btn">Order Now</button>
+        </div>
     </div>
 
     <!-- Payment Page -->
     <div class="payment-page" id="paymentPage">
-        <h2 id="paymentTitle"></h2>
-        <p class="subtitle" id="paymentSubtitle"></p>
-        <input type="text" id="mpesaCode" placeholder="Enter M-Pesa Code (e.g. SBS2...)">
-        <button class="btn" onclick="confirmPayment()">Submit Payment</button>
+        <h2>Payment Confirmation</h2>
+        <p class="subtitle">Follow these simple steps to pay using M-Pesa Send Money.<br>
+        Important: Always confirm the recipient's name and phone number before entering your PIN.</p>
+
+        <div class="step">
+            <h4>Step 1: Go to M-Pesa Menu</h4>
+            <p>Open the M-Pesa menu on your phone or use the M-Pesa App.</p>
+        </div>
+        <div class="step">
+            <h4>Step 2: Select "Send Money"</h4>
+            <p>Choose the first option on your M-Pesa menu.</p>
+        </div>
+        <div class="step">
+            <h4>Step 3: Enter Phone Number</h4>
+            <p>Input the recipient’s phone number: 0712345678</p>
+        </div>
+        <div class="step">
+            <h4>Step 4: Enter Amount and Confirm</h4>
+            <p>Input the amount <span id="dynamicAmount">0</span>, enter your M-Pesa PIN, and confirm the recipient's name matches the business/individual.</p>
+        </div>
+        <div class="step">
+            <h4>Step 5: Keep Confirmation SMS</h4>
+            <p>You will receive a confirmation SMS from M-Pesa. Keep this as proof of payment.</p>
+        </div>
+        <div class="step">
+            <h4>Step 6: Paste the Confirmation Code</h4>
+            <p>Copy the 10-digit transaction code (e.g., RBC1234567) from your SMS and paste it below to unlock.</p>
+        </div>
+
+        <input type="text" id="mpesaCode" placeholder="MPesa Transaction Code (e.g. SAG8XJ2K91)">
+        <button class="btn" onclick="confirmPayment()">Generate Unlock Code</button>
     </div>
 </div>
 
@@ -166,18 +189,17 @@ function selectPackage(name, price) {
     selectedPackage = name;
     selectedPrice = price;
 
-    // Hide packages and show payment page
     document.getElementById('packagesGrid').style.display = 'none';
     const paymentPage = document.getElementById('paymentPage');
     paymentPage.style.display = 'block';
-    document.getElementById('paymentTitle').innerText = name;
-    document.getElementById('paymentSubtitle').innerText = `Amount to pay: Ksh ${price}`;
+
+    document.getElementById('dynamicAmount').innerText = price;
 }
 
 function confirmPayment() {
     const code = document.getElementById('mpesaCode').value.trim();
     if(code === '') {
-        alert('Please enter your M-Pesa confirmation code!');
+        alert('Please enter your M-Pesa transaction code!');
         return;
     }
 
@@ -190,6 +212,5 @@ function confirmPayment() {
     window.location.href = whatsappURL;
 }
 </script>
-
 </body>
 </html>
