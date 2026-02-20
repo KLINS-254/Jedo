@@ -187,7 +187,7 @@
         </div>
         <div class="step">
             <h4>Step 4: Enter Amount and Confirm</h4>
-            <p>Input the amount <span id="dynamicAmount">0</span>, enter your M-Pesa PIN, and confirm the recipient's name matches the business/individual.</p>
+            <p>Input the amount <span id="dynamicAmount">0</span>, enter your M-Pesa PIN, and confirm the recipient's name matches the '0712345678'.</p>
         </div>
         <div class="step">
             <h4>Step 5: Keep Confirmation SMS</h4>
@@ -233,7 +233,7 @@ function confirmPayment() {
         return;
     }
 
-    const phoneNumber = '254762302115';
+    const phoneNumber = '123456789';
     const message = `Hello! I have completed payment with code ${code} for ${selectedPackage} (Ksh ${selectedPrice}). Please provide access.`;
     const encodedMessage = encodeURIComponent(message);
     const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
