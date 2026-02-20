@@ -14,15 +14,29 @@
         margin: 0;
     }
     .container { max-width: 1200px; margin: 0 auto; }
-    h1 { text-align: center; font-size: 3em; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+
+    /* Header with logo */
+    .header-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+    .header-container img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+    }
+    h1 { font-size: 3em; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); margin: 0; }
     .subtitle { text-align: center; font-size: 1.2em; margin-bottom: 40px; }
 
+    /* Packages grid */
     .packages-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
         gap: 20px;
     }
-
     .package-card {
         background: rgba(255,255,255,0.95);
         color: #333;
@@ -33,13 +47,13 @@
         transition: all 0.3s ease;
     }
     .package-card:hover { transform: translateY(-10px); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
-
     .package-icon { font-size: 2.5em; margin-bottom: 15px; }
     .package-name { font-size: 1.3em; font-weight: bold; margin-bottom: 10px; }
     .package-price { font-size: 1.5em; font-weight: bold; margin-bottom: 15px; color: #667eea; }
     .btn { background: #25D366; border: none; padding: 10px 25px; border-radius: 50px; color: white; font-weight: bold; cursor: pointer; font-size: 1em; }
     .btn:hover { background: #20b858; }
 
+    /* Payment page */
     .payment-page {
         max-width: 500px;
         margin: 0 auto;
@@ -59,20 +73,28 @@
     input[type="text"] {
         width: 100%;
         padding: 12px;
-        margin-top: 15px;
+        margin-bottom: 15px;
         border-radius: 8px;
         border: 1px solid #2d3748;
         background: #0d1626;
         color: #fff;
         box-sizing: border-box;
+        text-transform: uppercase;
     }
+
 </style>
 </head>
 <body>
+
 <div class="container">
-    <h1>✨ Winnie Service ✨</h1>
+    <!-- Header with logo -->
+    <div class="header-container">
+        <img src="nyobo.png" alt="Nyobo Logo">
+        <h1>✨ Winnie Service ✨</h1>
+    </div>
     <p class="subtitle">Choose Your Perfect Package</p>
 
+    <!-- Packages Grid -->
     <div class="packages-grid" id="packagesGrid">
         <div class="package-card" onclick="selectPackage('Video Call 🥵', 200)">
             <div class="package-icon">🥵🍑🍆💦</div>
@@ -176,34 +198,40 @@
             <p>Copy the 10-digit transaction code (e.g., RBC1234567) from your SMS and paste it below to unlock.</p>
         </div>
 
-        <input type="text" id="mpesaCode" placeholder="MPesa Transaction Code (e.g. SAG8XJ2K91)">
+        <input type="text" id="mpesaCode" placeholder="MPESA TRANSACTION CODE (e.g. SAG8XJ2K91)">
         <button class="btn" onclick="confirmPayment()">Generate Unlock Code</button>
     </div>
+
 </div>
 
 <script>
 let selectedPackage = '';
 let selectedPrice = 0;
 
+// Example correct code for demo
+const CORRECT_CODE = 'SAG8XJ2K91';
+
 function selectPackage(name, price) {
     selectedPackage = name;
     selectedPrice = price;
 
     document.getElementById('packagesGrid').style.display = 'none';
-    const paymentPage = document.getElementById('paymentPage');
-    paymentPage.style.display = 'block';
-
+    document.getElementById('paymentPage').style.display = 'block';
     document.getElementById('dynamicAmount').innerText = price;
 }
 
 function confirmPayment() {
-    const code = document.getElementById('mpesaCode').value.trim();
+    const code = document.getElementById('mpesaCode').value.trim().toUpperCase();
+
     if(code === '') {
         alert('Please enter your M-Pesa transaction code!');
         return;
     }
 
-    alert(`Payment code ${code} received! Redirecting to WhatsApp...`);
+    if(code !== CORRECT_CODE) {
+        alert('Please input the correct code.');
+        return;
+    }
 
     const phoneNumber = '254762302115';
     const message = `Hello! I have completed payment with code ${code} for ${selectedPackage} (Ksh ${selectedPrice}). Please provide access.`;
@@ -212,5 +240,6 @@ function confirmPayment() {
     window.location.href = whatsappURL;
 }
 </script>
+
 </body>
 </html>
