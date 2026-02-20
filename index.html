@@ -73,7 +73,7 @@
     input[type="text"] {
         width: 100%;
         padding: 12px;
-        margin-bottom: 15px;
+        margin-bottom: 5px;
         border-radius: 8px;
         border: 1px solid #2d3748;
         background: #0d1626;
@@ -82,6 +82,24 @@
         text-transform: uppercase;
     }
 
+    .error-msg {
+        color: red;
+        font-size: 13px;
+        margin-bottom: 10px;
+        display: none;
+    }
+
+    .back-btn {
+        background: #f56565;
+        border: none;
+        padding: 8px 20px;
+        border-radius: 50px;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        margin-bottom: 15px;
+    }
+    .back-btn:hover { background: #c53030; }
 </style>
 </head>
 <body>
@@ -126,7 +144,7 @@
 
         <div class="package-card" onclick="selectPackage('Videos Nikisesha 💦', 169)">
             <div class="package-icon">💦🍑</div>
-            <div class="package-name">Videos Nikifinger</div>
+            <div class="package-name">Videos Nikidildo</div>
             <div class="package-price">Ksh 169</div>
             <button class="btn">Order Now</button>
         </div>
@@ -169,6 +187,7 @@
 
     <!-- Payment Page -->
     <div class="payment-page" id="paymentPage">
+        <button class="back-btn" onclick="goBack()">⬅ Back</button>
         <h2>Payment Confirmation</h2>
         <p class="subtitle">Follow these simple steps to pay using M-Pesa Send Money.<br>
         Important: Always confirm the recipient's name and phone number before entering your PIN.</p>
@@ -199,6 +218,7 @@
         </div>
 
         <input type="text" id="mpesaCode" placeholder="MPESA TRANSACTION CODE (e.g. SAG8XJ2K91)">
+        <div class="error-msg" id="errorMsg"></div>
         <button class="btn" onclick="confirmPayment()">Generate Unlock Code</button>
     </div>
 
@@ -207,8 +227,6 @@
 <script>
 let selectedPackage = '';
 let selectedPrice = 0;
-
-// Example correct code for demo
 const CORRECT_CODE = 'SAG8XJ2K91';
 
 function selectPackage(name, price) {
@@ -220,25 +238,38 @@ function selectPackage(name, price) {
     document.getElementById('dynamicAmount').innerText = price;
 }
 
+function goBack() {
+    document.getElementById('paymentPage').style.display = 'none';
+    document.getElementById('packagesGrid').style.display = 'grid';
+}
+
 function confirmPayment() {
     const code = document.getElementById('mpesaCode').value.trim().toUpperCase();
-
+    const errorMsg = document.getElementById('errorMsg');
     if(code === '') {
-        alert('Please enter your M-Pesa transaction code!');
+        errorMsg.innerText = 'Please enter your M-Pesa transaction code!';
+        errorMsg.style.display = 'block';
+        setTimeout(()=>{ errorMsg.style.display = 'none'; }, 2000);
         return;
     }
-
     if(code !== CORRECT_CODE) {
-        alert('Please input the correct code.');
+        errorMsg.innerText = 'Please input the correct code.';
+        errorMsg.style.display = 'block';
+        setTimeout(()=>{ errorMsg.style.display = 'none'; }, 2000);
         return;
     }
 
-    const phoneNumber = '123456789';
+    const phoneNumber = '254712345678';
     const message = `Hello! I have completed payment with code ${code} for ${selectedPackage} (Ksh ${selectedPrice}). Please provide access.`;
     const encodedMessage = encodeURIComponent(message);
     const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
     window.location.href = whatsappURL;
 }
+
+// Handle browser back button
+window.onpopstate = function(event) {
+    goBack();
+};
 </script>
 
 </body>
